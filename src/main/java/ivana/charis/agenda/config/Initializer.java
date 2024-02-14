@@ -1,22 +1,20 @@
 package ivana.charis.agenda.config;
 
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import ivana.charis.agenda.client.Client;
-import ivana.charis.agenda.client.ClientRepository;
-import ivana.charis.agenda.employee.Employee;
-import ivana.charis.agenda.employee.EmployeeRepository;
-import ivana.charis.agenda.employee.Work;
-import ivana.charis.agenda.service.Service;
-import ivana.charis.agenda.service.ServiceRepository;
+import ivana.charis.agenda.domain.client.Client;
+import ivana.charis.agenda.domain.client.ClientRepository;
+import ivana.charis.agenda.domain.employee.Employee;
+import ivana.charis.agenda.domain.employee.EmployeeRepository;
+import ivana.charis.agenda.domain.employee.Work;
+import ivana.charis.agenda.domain.endereco.Endereco;
+import ivana.charis.agenda.domain.service.Service;
+import ivana.charis.agenda.domain.service.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 
 @Configuration
 public class Initializer implements CommandLineRunner {
@@ -37,8 +35,11 @@ public class Initializer implements CommandLineRunner {
 //        eRep.deleteAll();
 //        sRep.deleteAll();
 
-        var e = new Employee(null, "Mariana", "maria@gmail.com", 11960122205f, "Sou zika", Work.MANICURE, new ArrayList<>());
-        var c = new Client(null, "Marcia", "marcia@gmail.com", 11982322502f, "/photos/storage/i.png", 08012321f, new ArrayList<>());
+        Endereco endereco = new Endereco("Rua ABC", "Centro", "12345-678", (short) 123, "Apto 101", "São Paulo", "SP");
+        Endereco endereco2 = new Endereco("Avenida XYZ", "Vila Nova", "54321-987", (short) 456, "Casa 202", "Rio de Janeiro", "RJ");
+        var e = new Employee(null, "Mariana", "maria@gmail.com", "(11) 96012-2205", "/photos/storage/maria.png", "Sou zika", Work.MANICURE, new ArrayList<>(), endereco);
+        var c = new Client(null, "Marcia", "marcia@gmail.com", "(11) 96041-2305", "/photos/storage/marcia.png", new ArrayList<>(), endereco2);
+
 
         c = cRep.save(c);
         e = eRep.save(e);

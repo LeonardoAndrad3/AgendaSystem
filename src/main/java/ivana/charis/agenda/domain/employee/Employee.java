@@ -1,11 +1,13 @@
-package ivana.charis.agenda.employee;
+package ivana.charis.agenda.domain.employee;
 
-import ivana.charis.agenda.service.Service;
+import ivana.charis.agenda.domain.endereco.Endereco;
+import ivana.charis.agenda.domain.service.Service;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,7 +26,9 @@ public class Employee {
     private String email;
 
     @Column(unique = true)
-    private Float phone;
+    private String phone;
+
+    private String photo;
 
     private String description;
 
@@ -33,5 +37,19 @@ public class Employee {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "employee",cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private List<Service> services;
+    private List<Service> services = new ArrayList<>();
+
+    @Embedded
+    private Endereco endereco;
+
+    public Employee(EmployeeDTO dto) {
+        this.id = null;
+        this.name = dto.name();
+        this.email = dto.email();
+        this.phone = dto.phone();
+        this.photo = dto.photo();
+        this.description = dto.description();
+        this.work = dto.work();
+        this.endereco = new Endereco(dto.endereco());
+    }
 }

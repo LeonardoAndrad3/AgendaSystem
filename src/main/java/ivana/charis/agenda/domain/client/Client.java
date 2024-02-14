@@ -1,7 +1,8 @@
-package ivana.charis.agenda.client;
+package ivana.charis.agenda.domain.client;
 
 
-import ivana.charis.agenda.service.Service;
+import ivana.charis.agenda.domain.endereco.Endereco;
+import ivana.charis.agenda.domain.service.Service;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -24,13 +25,15 @@ public class Client {
     private String email;
 
     @Column(unique = true)
-    private Float phone;
+    private String phone;
 
     private String photo;
-    private Float cep;
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Service> works;
+
+    @Embedded
+    private Endereco endereco;
 
 }

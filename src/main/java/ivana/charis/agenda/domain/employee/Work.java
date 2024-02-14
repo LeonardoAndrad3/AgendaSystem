@@ -1,4 +1,4 @@
-package ivana.charis.agenda.employee;
+package ivana.charis.agenda.domain.employee;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Enumerated;

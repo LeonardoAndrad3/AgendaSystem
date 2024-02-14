@@ -1,13 +1,11 @@
-package ivana.charis.agenda.service;
+package ivana.charis.agenda.controller;
 
-import jakarta.websocket.server.PathParam;
-import lombok.Getter;
+import ivana.charis.agenda.domain.service.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @RestController

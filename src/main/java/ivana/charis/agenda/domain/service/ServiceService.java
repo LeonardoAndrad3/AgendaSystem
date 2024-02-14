@@ -1,4 +1,4 @@
-package ivana.charis.agenda.service;
+package ivana.charis.agenda.domain.service;
 
 
 import ivana.charis.agenda.util.CalendarManager;
@@ -25,16 +25,12 @@ public class ServiceService {
 
         var services = rep.findAllByDay(LocalDate.parse(dateNow));
 
-        for(ivana.charis.agenda.service.Service service : services){
-           times.removeIf(d -> service.getStart().isBefore(d) && service.getFinish().isAfter(d));
+        for(ivana.charis.agenda.domain.service.Service service : services){
+           times.removeIf(d -> service.getStart().isBefore(d) && service.getEnding().isAfter(d));
         }
 
         System.out.println(times);
 
         return times;
     }
-
-
-
-
 }

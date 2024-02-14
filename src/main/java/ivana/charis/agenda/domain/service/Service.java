@@ -1,12 +1,14 @@
-package ivana.charis.agenda.service;
+package ivana.charis.agenda.domain.service;
 
-import ivana.charis.agenda.client.Client;
-import ivana.charis.agenda.employee.Employee;
+import ivana.charis.agenda.domain.client.Client;
+import ivana.charis.agenda.domain.employee.Employee;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 
 @Entity
@@ -24,7 +26,7 @@ public class Service {
     @ManyToOne
     private Client client;
     private LocalDateTime start;
-    private LocalDateTime finish;
+    private LocalDateTime ending;
 
     @Override
     public String toString() {
@@ -33,7 +35,7 @@ public class Service {
                 ", employee=" + employee.getId() +
                 ", client=" + client.getId() +
                 ", date=" + start +
-                ", end=" + finish +
+                ", end=" + ending +
                 '}';
     }
 }

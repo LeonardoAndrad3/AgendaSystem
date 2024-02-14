@@ -1,4 +1,4 @@
-package ivana.charis.agenda.employee;
+package ivana.charis.agenda.domain.employee;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
