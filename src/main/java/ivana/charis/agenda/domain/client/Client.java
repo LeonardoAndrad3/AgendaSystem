@@ -3,6 +3,7 @@ package ivana.charis.agenda.domain.client;
 
 import ivana.charis.agenda.domain.endereco.Endereco;
 import ivana.charis.agenda.domain.service.Service;
+import ivana.charis.agenda.domain.usuario.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -21,7 +22,9 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     private String email;
 
     @Column(unique = true)
@@ -35,5 +38,8 @@ public class Client {
 
     @Embedded
     private Endereco endereco;
+
+    @Embedded
+    private User user;
 
 }

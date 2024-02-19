@@ -2,6 +2,7 @@ package ivana.charis.agenda.domain.employee;
 
 import ivana.charis.agenda.domain.endereco.Endereco;
 import ivana.charis.agenda.domain.service.Service;
+import ivana.charis.agenda.domain.usuario.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -16,13 +17,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Employee {
+public class Employee{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
+
     private String email;
 
     @Column(unique = true)
@@ -42,11 +44,10 @@ public class Employee {
     @Embedded
     private Endereco endereco;
 
+    @Embedded
+    private User user;
+
     public Employee(EmployeeDTO dto) {
-        this.id = null;
-        this.name = dto.name();
-        this.email = dto.email();
-        this.phone = dto.phone();
         this.photo = dto.photo();
         this.description = dto.description();
         this.work = dto.work();
