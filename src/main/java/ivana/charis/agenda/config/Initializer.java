@@ -31,25 +31,21 @@ public class Initializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-//        cRep.deleteAll();
-//        eRep.deleteAll();
-//        sRep.deleteAll();
+        Endereco endereco = new Endereco("Rua ABC", "Centro", "12345-678", (short) 223, "Apto 101", "São Paulo", "SP");
+        Endereco endereco2 = new Endereco("Avenida XYZ", "Vila Nova", "54321-987", (short) 456, "Casa 202", "Rio de Janeiro", "RJ");
+        var e = new Employee(null, "Mariana", "maria@gmail.com", "(11) 96012-2205", "/photos/storage/maria.png", "Sou zika", Work.MANICURE, new ArrayList<>(), endereco);
+        var c = new Client(null, "Marcia", "marcia@gmail.com", "(11) 96041-2305", "/photos/storage/marcia.png", new ArrayList<>(), endereco2);
 
-//        Endereco endereco = new Endereco("Rua ABC", "Centro", "12345-678", (short) 223, "Apto 101", "São Paulo", "SP");
-//        Endereco endereco2 = new Endereco("Avenida XYZ", "Vila Nova", "54321-987", (short) 456, "Casa 202", "Rio de Janeiro", "RJ");
-//        var e = new Employee(null, "Mariana", "maria@gmail.com", "(11) 96012-2205", "/photos/storage/maria.png", "Sou zika", Work.MANICURE, new ArrayList<>(), endereco);
-//        var c = new Client(null, "Marcia", "marcia@gmail.com", "(11) 96041-2305", "/photos/storage/marcia.png", new ArrayList<>(), endereco2);
-//
-//
-//        c = cRep.save(c);
-//        e = eRep.save(e);
-//
-//        sRep.saveAll(Arrays.asList(
-//                new Service(null, e, c, LocalDateTime.parse("2024-01-27T11:10:21.559547400"),LocalDateTime.parse("2024-01-27T12:10:21.559547400")),
-//                new Service(null, e, c, LocalDateTime.parse("2024-01-27T13:10:21.559547400"),LocalDateTime.parse("2024-01-27T14:10:21.559547400"))
-//        ));
-//
-//        System.out.println(LocalDateTime.now().minusHours(0));
+
+        c = cRep.save(c);
+        e = eRep.save(e);
+
+        sRep.saveAll(Arrays.asList(
+                new Service(null, e, c, LocalDateTime.parse("2024-01-27T11:10:21.559547400"),LocalDateTime.parse("2024-01-27T12:10:21.559547400")),
+                new Service(null, e, c, LocalDateTime.parse("2024-01-27T13:10:21.559547400"),LocalDateTime.parse("2024-01-27T14:10:21.559547400"))
+        ));
+
+        System.out.println(LocalDateTime.now().minusHours(0));
 
 
     }

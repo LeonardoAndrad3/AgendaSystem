@@ -39,7 +39,7 @@ public class Client {
     @Embedded
     private Endereco endereco;
 
-    @Embedded
+    @OneToOne
     private User user;
 
 }

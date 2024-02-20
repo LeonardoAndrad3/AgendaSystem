@@ -44,7 +44,7 @@ public class Employee{
     @Embedded
     private Endereco endereco;
 
-    @Embedded
+    @OneToOne
     private User user;
 
     public Employee(EmployeeDTO dto) {

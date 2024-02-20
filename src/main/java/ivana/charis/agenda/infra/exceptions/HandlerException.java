@@ -1,4 +1,4 @@
-package ivana.charis.agenda.infra;
+package ivana.charis.agenda.infra.exceptions;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.annotation.HandlesTypes;
