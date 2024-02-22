@@ -11,7 +11,7 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-public class User{
+public class UserClient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,9 +21,5 @@ public class User{
     private String senha;
 
     @OneToOne
-    private Employee employee;
-
-    @OneToOne
     private Client client;
-
 }

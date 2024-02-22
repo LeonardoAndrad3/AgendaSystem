@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService implements UserDetailsService {
 
-    private UserRepository user;
+    private UserClientRepository user;
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {

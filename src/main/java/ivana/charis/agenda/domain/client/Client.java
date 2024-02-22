@@ -3,7 +3,7 @@ package ivana.charis.agenda.domain.client;
 
 import ivana.charis.agenda.domain.endereco.Endereco;
 import ivana.charis.agenda.domain.service.Service;
-import ivana.charis.agenda.domain.usuario.User;
+import ivana.charis.agenda.domain.usuario.UserClient;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -39,7 +39,5 @@ public class Client {
     @Embedded
     private Endereco endereco;
 
-    @OneToOne
-    private User user;
-
+    private String password;
 }

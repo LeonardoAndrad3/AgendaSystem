@@ -8,6 +8,8 @@ import ivana.charis.agenda.domain.employee.Work;
 import ivana.charis.agenda.domain.endereco.Endereco;
 import ivana.charis.agenda.domain.service.Service;
 import ivana.charis.agenda.domain.service.ServiceRepository;
+import ivana.charis.agenda.domain.usuario.UserClient;
+import ivana.charis.agenda.domain.usuario.UserClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -28,24 +30,34 @@ public class Initializer implements CommandLineRunner {
     @Autowired
     private ServiceRepository sRep;
 
+    @Autowired
+    private UserClientRepository uRep;
+
     @Override
     public void run(String... args) throws Exception {
 
-        Endereco endereco = new Endereco("Rua ABC", "Centro", "12345-678", (short) 223, "Apto 101", "São Paulo", "SP");
-        Endereco endereco2 = new Endereco("Avenida XYZ", "Vila Nova", "54321-987", (short) 456, "Casa 202", "Rio de Janeiro", "RJ");
-        var e = new Employee(null, "Mariana", "maria@gmail.com", "(11) 96012-2205", "/photos/storage/maria.png", "Sou zika", Work.MANICURE, new ArrayList<>(), endereco);
-        var c = new Client(null, "Marcia", "marcia@gmail.com", "(11) 96041-2305", "/photos/storage/marcia.png", new ArrayList<>(), endereco2);
-
-
-        c = cRep.save(c);
-        e = eRep.save(e);
-
-        sRep.saveAll(Arrays.asList(
-                new Service(null, e, c, LocalDateTime.parse("2024-01-27T11:10:21.559547400"),LocalDateTime.parse("2024-01-27T12:10:21.559547400")),
-                new Service(null, e, c, LocalDateTime.parse("2024-01-27T13:10:21.559547400"),LocalDateTime.parse("2024-01-27T14:10:21.559547400"))
-        ));
-
-        System.out.println(LocalDateTime.now().minusHours(0));
+//        Endereco endereco = new Endereco("Rua ABC", "Centro", "12345-678", (short) 223, "Apto 101", "São Paulo", "SP");
+//        Endereco endereco2 = new Endereco("Avenida XYZ", "Vila Nova", "54321-987", (short) 456, "Casa 202", "Rio de Janeiro", "RJ");
+//
+//        var user = new UserClient(null, "leonardo", "12345", null, null);
+//        var user2 = new UserClient(null, "Ander", "123423", null, null);
+//
+//
+//        var e = new Employee(null, "Mariana", "maria@gmail.com", "(11) 96012-2205", "/photos/storage/maria.png", "Sou zika", Work.MANICURE, new ArrayList<>(), endereco, user);
+//        user.setEmployee(e);
+//
+//        var c = new Client(null, "Marcia", "marcia@gmail.com", "(11) 96041-2305", "/photos/storage/marcia.png", new ArrayList<>(), endereco2, user2);
+//        user2.setClient(c);
+//
+//        c = cRep.save(c);
+//        e = eRep.save(e);
+//
+//        sRep.saveAll(Arrays.asList(
+//                new Service(null, e, c, LocalDateTime.parse("2024-01-27T11:10:21.559547400"),LocalDateTime.parse("2024-01-27T12:10:21.559547400")),
+//                new Service(null, e, c, LocalDateTime.parse("2024-01-27T13:10:21.559547400"),LocalDateTime.parse("2024-01-27T14:10:21.559547400"))
+//        ));
+//
+//        System.out.println(LocalDateTime.now().minusHours(0));
 
 
     }

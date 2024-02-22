@@ -2,7 +2,8 @@ package ivana.charis.agenda.domain.employee;
 
 import ivana.charis.agenda.domain.endereco.Endereco;
 import ivana.charis.agenda.domain.service.Service;
-import ivana.charis.agenda.domain.usuario.User;
+import ivana.charis.agenda.domain.usuario.UserClient;
+import ivana.charis.agenda.domain.usuario.UserEmployee;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -44,8 +45,7 @@ public class Employee{
     @Embedded
     private Endereco endereco;
 
-    @OneToOne
-    private User user;
+    private String password;
 
     public Employee(EmployeeDTO dto) {
         this.photo = dto.photo();
