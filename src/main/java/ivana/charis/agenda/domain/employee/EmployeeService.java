@@ -30,6 +30,6 @@ public class EmployeeService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return rep.find;
+        return rep.findByEmail(username);
     }
 }

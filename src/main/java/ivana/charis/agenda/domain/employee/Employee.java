@@ -2,14 +2,16 @@ package ivana.charis.agenda.domain.employee;
 
 import ivana.charis.agenda.domain.endereco.Endereco;
 import ivana.charis.agenda.domain.service.Service;
-import ivana.charis.agenda.domain.usuario.UserClient;
-import ivana.charis.agenda.domain.usuario.UserEmployee;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -18,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Employee{
+public class Employee implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,5 +54,35 @@ public class Employee{
         this.description = dto.description();
         this.work = dto.work();
         this.endereco = new Endereco(dto.endereco());
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_EMPLOYEE"));
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
