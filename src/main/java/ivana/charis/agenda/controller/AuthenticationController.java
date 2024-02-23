@@ -1,6 +1,6 @@
 package ivana.charis.agenda.controller;
 
-import ivana.charis.agenda.auth.DataAuthentication;
+import ivana.charis.agenda.auth.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +18,16 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationManager manager;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping
     public ResponseEntity login(@RequestBody @Valid DataAuthentication data){
-        var token = new UsernamePasswordAuthenticationToken(data.email(), data.password());
-        var authentication = manager.authenticate(token);
+        var authenticationToken = new UsernamePasswordAuthenticationToken(data.email(), data.password());
+        var authentication = manager.authenticate(authenticationToken);
 
-        return ResponseEntity.ok().build();
+        var token = tokenService.generatedToken((GeneratedUser) authentication.getPrincipal());
+
+        return ResponseEntity.ok(new TokeJWTDTO(token));
     }
-
-
-
 }

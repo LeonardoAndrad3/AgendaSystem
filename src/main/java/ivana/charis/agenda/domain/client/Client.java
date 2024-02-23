@@ -1,6 +1,8 @@
 package ivana.charis.agenda.domain.client;
 
 
+import ivana.charis.agenda.auth.GeneratedUser;
+import ivana.charis.agenda.auth.User;
 import ivana.charis.agenda.domain.endereco.Endereco;
 import ivana.charis.agenda.domain.service.Service;
 import jakarta.persistence.*;
@@ -20,7 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Client implements UserDetails {
+public class Client implements UserDetails, GeneratedUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,5 +74,11 @@ public class Client implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public User generatedUser() {
+        var authority = this.getAuthorities().stream().findFirst().map(GrantedAuthority::getAuthority).orElse("null");
+        return new User(this.id, this.name, this.email, authority);
     }
 }
