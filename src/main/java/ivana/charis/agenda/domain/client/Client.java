@@ -46,6 +46,14 @@ public class Client implements UserDetails, GeneratedUser {
 
     private String password;
 
+    public Client(ClientDTO data){
+        this.name = data.name();
+        this.email = data.email();
+        this.phone = data.phone();
+        this.photo = data.photo();
+        this.endereco = new Endereco(data.endereco());
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_CLIENT"));

@@ -51,11 +51,11 @@ public class Employee implements UserDetails, GeneratedUser {
 
     private String password;
 
-    public Employee(EmployeeDTO dto) {
-        this.photo = dto.photo();
-        this.description = dto.description();
-        this.work = dto.work();
-        this.endereco = new Endereco(dto.endereco());
+    public Employee(EmployeeDTO data) {
+        this.photo = data.photo();
+        this.description = data.description();
+        this.work = data.work();
+        this.endereco = new Endereco(data.endereco());
     }
 
     @Override

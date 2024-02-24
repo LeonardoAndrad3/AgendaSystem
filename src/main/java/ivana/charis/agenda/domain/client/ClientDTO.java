@@ -15,9 +15,7 @@ public record ClientDTO (
         String email,
         @NotNull
         String phone,
-
         String photo,
-
         @Valid
         EnderecoDTO endereco
 ){

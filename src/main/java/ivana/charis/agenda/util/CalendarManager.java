@@ -7,19 +7,18 @@ import java.util.List;
 public class CalendarManager {
 
     private final List<LocalDateTime> times = new ArrayList<>();
-    private final Integer CLOSED_SALON = 22;
+    private final Integer END_SERVICES = 21;
 
     public List<LocalDateTime> generetedTimes(Integer day){
 
         var time = LocalDateTime.now(ZoneId.of("America/Sao_Paulo"));
-        time = time.withDayOfMonth(day).withMinute(0);
+        time = time.withDayOfMonth(day);
 
-        while(time.getHour() != CLOSED_SALON){
-            time = time.plusMinutes(10);
+        while(time.getHour() != END_SERVICES){
             times.add(time);
+            time = time.plusMinutes(10);
         }
 
         return times;
     }
-
 }

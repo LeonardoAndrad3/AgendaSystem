@@ -1,5 +1,6 @@
 package ivana.charis.agenda.controller;
 
+import ivana.charis.agenda.domain.service.ServiceDTO;
 import ivana.charis.agenda.domain.service.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,14 @@ public class ServiceController {
     private ServiceService service;
 
     @PostMapping("/times")
-    public ResponseEntity<List<LocalDateTime>> findServicesDate(@RequestPart Integer date){
-        return ResponseEntity.ok().body(service.findAgenda(date));
+    public ResponseEntity<List<LocalDateTime>> findServicesDate(@RequestPart Integer day){
+        return ResponseEntity.ok().body(service.findAgenda(day));
     }
 
+    @PostMapping
+    public ResponseEntity addNewService(@RequestPart Integer day, @RequestBody ServiceDTO service){
+
+        return ResponseEntity.ok("k");
+    }
 
 }

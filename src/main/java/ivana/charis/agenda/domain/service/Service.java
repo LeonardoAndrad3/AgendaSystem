@@ -28,6 +28,15 @@ public class Service {
     private LocalDateTime start;
     private LocalDateTime ending;
 
+
+
+    public Service(ServiceDTO dto){
+        this.employee =  new Employee(dto.employee());
+        this.client = new Client(dto.client());
+        this.start = dto.start();
+        this.ending = dto.end();
+    }
+
     @Override
     public String toString() {
         return "Service{" +
