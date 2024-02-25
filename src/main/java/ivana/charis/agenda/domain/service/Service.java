@@ -28,11 +28,16 @@ public class Service {
     private LocalDateTime start;
     private LocalDateTime ending;
 
-
-
     public Service(ServiceDTO dto){
         this.employee =  new Employee(dto.employee());
         this.client = new Client(dto.client());
+        this.start = dto.start();
+        this.ending = dto.end();
+    }
+
+    public Service(ServiceNewServiceDTO dto, Client client, Employee employee) {
+        this.employee =  employee;
+        this.client = client;
         this.start = dto.start();
         this.ending = dto.end();
     }

@@ -11,4 +11,7 @@ public record ServiceDTO(
         LocalDateTime start,
         LocalDateTime end
         ) {
+        public ServiceDTO(Service data) {
+                this(new ClientDTO(data.getClient()), new EmployeeDTO(data.getEmployee()), data.getStart(),data.getEnding());
+        }
 }

@@ -1,6 +1,8 @@
 package ivana.charis.agenda.domain.service;
 
 
+import ivana.charis.agenda.domain.client.ClientRepository;
+import ivana.charis.agenda.domain.employee.EmployeeRepository;
 import ivana.charis.agenda.util.CalendarManager;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -8,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,16 +20,25 @@ public class ServiceService {
     @Autowired
     private ServiceRepository rep;
 
+    @Autowired
+    private EmployeeRepository eRep;
+
+    @Autowired
+    private ClientRepository cRep;
+
+    private LocalDateTime dateNow = LocalDateTime.now(ZoneId.of("America/Sao_Paulo"));
+
     public List<LocalDateTime> findAgenda(Integer day){
 
-        if(day < LocalDate.now().getDayOfMonth())
+        if(LocalDate.now().getDayOfMonth() > day)
             throw new RuntimeException("Day is after in today date");
 
         CalendarManager c = new CalendarManager();
 
         var times = c.generetedTimes(day);
-        var dateNow = LocalDateTime.now(ZoneId.of("America/Sao_Paulo")).withDayOfMonth(day).format(DateTimeFormatter.ISO_LOCAL_DATE);
-        var services = rep.findAllByDay(LocalDate.parse(dateNow));
+
+        var date = dateNow.withDayOfMonth(day).format(DateTimeFormatter.ISO_LOCAL_DATE);
+        var services = rep.findAllByDay(LocalDate.parse(date));
 
         for(ivana.charis.agenda.domain.service.Service service : services){
            times.removeIf(d -> service.getEnding().isAfter(d) && service.getStart().isBefore(d) );
@@ -35,12 +47,27 @@ public class ServiceService {
         return times;
     }
 
-//    public Service addNewService(Integer day, ServiceDTO data){
-//
-//        Service response = null;
-//        var times = rep.f();
-//
-//        return response;
-//    }
+    public ServiceDTO addNewService(Integer day, ServiceNewServiceDTO data){
 
+        var date = dateNow.withDayOfMonth(day).format(DateTimeFormatter.ISO_LOCAL_DATE);
+        var services = rep.findAllByDay(LocalDate.parse(date));
+        List<LocalDateTime> times = findAgenda(day).stream().filter( d -> d.isAfter(data.start())&&  d.isBefore(data.end())).toList();
+
+        //This algorithm usage for search service marked in us system
+        for(Service service : services){
+            if(
+                    (data.start().isBefore(service.getStart()) && service.getStart().isBefore(data.end()))
+                    ||
+                    (data.start().isBefore(service.getEnding()) && service.getEnding().isBefore(data.end()))
+            )
+                throw new RuntimeException("Sorry, the time marked is exist in us system");
+        }
+
+        var client = cRep.getReferenceById(data.id_client());
+        var employee = eRep.getReferenceById(data.id_employee());
+
+        var service = rep.save(new Service(data, client, employee));
+
+        return new ServiceDTO(service);
+    }
 }

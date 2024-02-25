@@ -1,6 +1,7 @@
 package ivana.charis.agenda.controller;
 
 import ivana.charis.agenda.domain.service.ServiceDTO;
+import ivana.charis.agenda.domain.service.ServiceNewServiceDTO;
 import ivana.charis.agenda.domain.service.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +23,10 @@ public class ServiceController {
     }
 
     @PostMapping
-    public ResponseEntity addNewService(@RequestPart Integer day, @RequestBody ServiceDTO service){
+    public ResponseEntity addNewService(@RequestParam Integer day, @RequestBody ServiceNewServiceDTO data){
 
-        return ResponseEntity.ok("k");
+        var newService = service.addNewService(day, data);
+
+        return ResponseEntity.ok(newService);
     }
-
 }

@@ -19,4 +19,7 @@ public record ClientDTO (
         @Valid
         EnderecoDTO endereco
 ){
+        public ClientDTO(Client data) {
+                this(data.getName(), data.getEmail(), data.getPhone(), data.getPhoto(), new EnderecoDTO(data.getEndereco()));
+        }
 }
