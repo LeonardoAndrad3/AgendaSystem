@@ -47,7 +47,7 @@ public class ServiceService {
         return times;
     }
 
-    public ServiceDTO addNewService(Integer day, ServiceNewServiceDTO data){
+    public Service addNewService(Integer day, ServiceNewServiceDTO data){
 
         var date = dateNow.withDayOfMonth(day).format(DateTimeFormatter.ISO_LOCAL_DATE);
         var services = rep.findAllByDay(LocalDate.parse(date));
@@ -67,6 +67,17 @@ public class ServiceService {
         var employee = eRep.getReferenceById(data.id_employee());
 
         var service = rep.save(new Service(data, client, employee));
+
+        return service;
+    }
+
+    public List<ServiceListDTO> findAll() {
+        return rep.findAll().stream().map(ServiceListDTO::new).toList();
+    }
+
+    public ServiceDTO findById(Long id) {
+
+        var service = rep.findById(id).orElseThrow(() -> new RuntimeException("Id Not found"));
 
         return new ServiceDTO(service);
     }
