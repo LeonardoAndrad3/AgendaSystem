@@ -54,6 +54,7 @@ public class ServiceService {
         List<LocalDateTime> times = findAgenda(day).stream().filter( d -> d.isAfter(data.start())&&  d.isBefore(data.end())).toList();
 
         //This algorithm usage for search service marked in us system
+        //PLEASE THIS CODE IS DANGED WITH BIG DATA
         for(Service service : services){
             if(
                     (data.start().isBefore(service.getStart()) && service.getStart().isBefore(data.end()))
