@@ -31,8 +31,8 @@ public class ServiceController {
     }
 
     @PostMapping("/date")
-    public ResponseEntity<List<LocalDateTime>> findServicesDate(@RequestPart Integer day){
-        return ResponseEntity.ok().body(serviceS.findAgenda(day));
+    public ResponseEntity<List<LocalDateTime>> findServicesDate(@RequestPart Integer day, Long idEmployee){
+        return ResponseEntity.ok().body(serviceS.findAgenda(day, idEmployee));
     }
 
     @PostMapping()

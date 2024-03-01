@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 
 public record ServiceListDTO(
         Long id,
-        Long id_employee,
-        Long id_client,
+        Long idEmployee,
+        Long idClient,
         LocalDateTime start,
         LocalDateTime end
 ){
