@@ -4,6 +4,9 @@ import ivana.charis.agenda.domain.service.ServiceDTO;
 import ivana.charis.agenda.domain.service.ServiceNewServiceDTO;
 import ivana.charis.agenda.domain.service.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -19,8 +22,8 @@ public class ServiceController {
     private ServiceService serviceS;
 
     @GetMapping
-    public ResponseEntity findAll(){
-        var services = serviceS.findAll();
+    public ResponseEntity findAll(@PageableDefault(size = 4, sort = {"start"}, direction = Sort.Direction.ASC) Pageable pg){
+        var services = serviceS.findAll(pg);
         return ResponseEntity.ok(services);
     }
 
@@ -43,6 +46,4 @@ public class ServiceController {
 
         return ResponseEntity.created(uri).body(new ServiceNewServiceDTO(newService));
     }
-
-
 }

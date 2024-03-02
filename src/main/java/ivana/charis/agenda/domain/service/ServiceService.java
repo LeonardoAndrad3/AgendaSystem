@@ -5,6 +5,8 @@ import ivana.charis.agenda.domain.client.ClientRepository;
 import ivana.charis.agenda.domain.employee.EmployeeRepository;
 import ivana.charis.agenda.util.CalendarManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -67,8 +69,8 @@ public class ServiceService {
             throw new RuntimeException("Sorry, the time you want marked is exist in us system");
     }
 
-    public List<ServiceListDTO> findAll() {
-        return rep.findAll().stream().map(ServiceListDTO::new).toList();
+    public Page<ServiceListDTO> findAll(Pageable pg) {
+        return rep.findAll(pg).map(ServiceListDTO::new);
     }
 
     public ServiceDTO findById(Long id) {

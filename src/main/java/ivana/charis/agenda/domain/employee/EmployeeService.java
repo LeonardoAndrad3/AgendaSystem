@@ -1,6 +1,8 @@
 package ivana.charis.agenda.domain.employee;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,7 +18,7 @@ public class EmployeeService implements UserDetailsService {
     private EmployeeRepository rep;
 
     public List<ListEmployeeDTO> findAll() {
-        return rep.findAll().stream().map(ListEmployeeDTO::new).collect(Collectors.toList());
+        return rep.findAll().stream().map(ListEmployeeDTO::new).toList();
     }
 
     public EmployeeDTO findById(Long id) {

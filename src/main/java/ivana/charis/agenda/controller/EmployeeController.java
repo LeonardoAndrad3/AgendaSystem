@@ -5,6 +5,9 @@ import ivana.charis.agenda.domain.employee.EmployeeService;
 import ivana.charis.agenda.domain.employee.ListEmployeeDTO;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -20,7 +23,7 @@ public class EmployeeController {
     private EmployeeService service;
 
     @GetMapping
-    public ResponseEntity<List<ListEmployeeDTO>> findAll(){
+    public ResponseEntity findAll(){
         return ResponseEntity.ok(service.findAll());
     }
 

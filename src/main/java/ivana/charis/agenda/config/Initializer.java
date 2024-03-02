@@ -43,9 +43,9 @@ public class Initializer implements CommandLineRunner {
 //        c = cRep.save(c);
 //        e = eRep.save(e);
 ////
-        sRep.saveAll(Arrays.asList(
-                new Service(null, eRep.getReferenceById(1l), cRep.getReferenceById(1l), LocalDateTime.parse("2024-03-27T15:10:21.559547400"),LocalDateTime.parse("2024-03-27T16:10:21.559547400"))
-        ));
+//        sRep.saveAll(Arrays.asList(
+//                new Service(null, eRep.getReferenceById(1l), cRep.getReferenceById(1l), LocalDateTime.parse("2024-03-27T15:10:21.559547400"),LocalDateTime.parse("2024-03-27T16:10:21.559547400"))
+//        ));
 //
 //        System.out.println(LocalDateTime.now().minusHours(0));
 
