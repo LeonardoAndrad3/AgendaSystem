@@ -1,8 +1,6 @@
 package ivana.charis.agenda.controller;
 
-import ivana.charis.agenda.domain.service.ServiceDTO;
-import ivana.charis.agenda.domain.service.ServiceNewServiceDTO;
-import ivana.charis.agenda.domain.service.ServiceService;
+import ivana.charis.agenda.domain.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -38,12 +36,12 @@ public class ServiceController {
         return ResponseEntity.ok().body(serviceS.findAgenda(day, idEmployee));
     }
 
-    @PostMapping()
-    public ResponseEntity addNewService(@RequestParam Integer day, @RequestBody ServiceNewServiceDTO data, UriComponentsBuilder builder){
+    @PostMapping("/add")
+    public ResponseEntity addNewService(@RequestBody ServiceAddDTO data, UriComponentsBuilder builder){
 
-        var newService = serviceS.addNewService(day, data);
-        var uri = builder.path("/services/{id}").buildAndExpand(newService.getId()).toUri();
+        var newService = serviceS.addNewService(data);
+        var uri = builder.path("/services/{id}").buildAndExpand(newService.id()).toUri();
 
-        return ResponseEntity.created(uri).body(new ServiceNewServiceDTO(newService));
+        return ResponseEntity.created(uri).body(newService);
     }
 }

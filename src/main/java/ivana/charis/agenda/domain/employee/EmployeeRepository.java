@@ -14,7 +14,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     UserDetails findByEmail (String email);
 
     @Query("""
-            select case when count(e) > 0 then true else false end from Employee e
+            select case when count(e) = 0 then true else false end from Employee e
             join e.services s
             where s.employee.id = :id
             and

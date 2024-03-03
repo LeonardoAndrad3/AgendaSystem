@@ -30,15 +30,15 @@ public class ServiceService {
 
     public List<LocalDateTime> findAgenda(Integer day, Long idEmployee){
 
-        if(LocalDate.now().getDayOfMonth() > day)
-            throw new RuntimeException("Day is after in today date");
+        verifyDate(day);
 
         CalendarManager c = new CalendarManager();
 
         var times = c.generetedTimes(day);
 
         var date = dateNow.withDayOfMonth(day).format(DateTimeFormatter.ISO_LOCAL_DATE);
-        var services = rep.findAllByDayAndEmployee(LocalDate.parse(date), idEmployee);
+        var services = rep.findByDayAndEmployee(LocalDate.parse(date), idEmployee);
+
 
         for(ivana.charis.agenda.domain.service.Service service : services){
            times.removeIf(d -> service.getStart().isBefore(d) && service.getEnding().isAfter(d));
@@ -47,7 +47,7 @@ public class ServiceService {
         return times;
     }
 
-    public Service addNewService(Integer day, ServiceNewServiceDTO data){
+    public ServiceNewServiceDTO addNewService(ServiceAddDTO data){
 
 //        var date = dateNow.withDayOfMonth(day).format(DateTimeFormatter.ISO_LOCAL_DATE);
 //        var services = rep.findAllByDay(LocalDate.parse(date));
@@ -65,8 +65,16 @@ public class ServiceService {
 //        }
 
 
-        System.out.println(eRep.findAgendaMarked(data.start(), data.end(), data.idEmployee()));
-            throw new RuntimeException("Sorry, the time you want marked is exist in us system");
+        if(verifyDate(data.start().getDayOfMonth()) && eRep.findAgendaMarked(data.start(), data.end(), data.idEmployee())){
+            var client = cRep.getReferenceById(data.idClient());
+            var employee = eRep.getReferenceById(data.idEmployee());
+
+            var service = rep.save(new Service(null, employee, client, data.start(), data.end()));
+
+            return new ServiceNewServiceDTO(service);
+        }
+
+        throw new RuntimeException("Sorry, the time you want marked is exist in us system");
     }
 
     public Page<ServiceListDTO> findAll(Pageable pg) {
@@ -78,5 +86,13 @@ public class ServiceService {
         var service = rep.findById(id).orElseThrow(() -> new RuntimeException("Id Not found"));
 
         return new ServiceDTO(service);
+    }
+
+    public boolean verifyDate(int day){
+
+        if(day < LocalDateTime.now().getDayOfMonth())
+            throw new RuntimeException("Day is after in today date");
+
+        return day >= LocalDateTime.now().getDayOfMonth();
     }
 }

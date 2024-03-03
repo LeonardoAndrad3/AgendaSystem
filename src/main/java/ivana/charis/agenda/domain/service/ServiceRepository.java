@@ -11,5 +11,5 @@ import java.util.List;
 public interface ServiceRepository extends JpaRepository<Service, Long> {
 
     @Query("SELECT s FROM Service s where extract(date from s.start) = :day and s.employee.id = :id")
-    public List<Service> findAllByDayAndEmployee(LocalDate day, long id);
+    public List<Service> findByDayAndEmployee(LocalDate day, long id);
 }
