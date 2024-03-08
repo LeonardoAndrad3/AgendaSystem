@@ -41,7 +41,7 @@ public class ServiceService {
 
 
         for(ivana.charis.agenda.domain.service.Service service : services){
-           times.removeIf(d -> service.getStart().isBefore(d) && service.getEnding().isAfter(d));
+           times.removeIf(d -> service.getStart().isBefore(d.toLocalTime()) && service.getEnding().isAfter(d));
         }
 
         return times;
@@ -65,11 +65,11 @@ public class ServiceService {
 //        }
 
 
-        if(verifyDate(data.start().getDayOfMonth()) && eRep.findAgendaMarked(data.start(), data.end(), data.idEmployee())){
+        if(verifyDate(data.date().getDayOfMonth()) && eRep.findAgendaMarked(data.date(), data.start(), data.end(), data.idEmployee())){
             var client = cRep.getReferenceById(data.idClient());
             var employee = eRep.getReferenceById(data.idEmployee());
 
-            var service = rep.save(new Service(null, employee, client, data.start(), data.end()));
+            var service = rep.save(new Service(null, employee, client, data.date(), data.start(), data.end()));
 
             return new ServiceNewServiceDTO(service);
         }

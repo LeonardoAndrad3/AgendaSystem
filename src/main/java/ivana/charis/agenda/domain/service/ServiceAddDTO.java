@@ -1,12 +1,16 @@
 package ivana.charis.agenda.domain.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public record ServiceAddDTO(
         Long idEmployee,
         Long idClient,
-        LocalDateTime start,
-        LocalDateTime end
+
+        LocalDate date,
+        LocalTime start,
+        LocalTime end
 ) {
 
 

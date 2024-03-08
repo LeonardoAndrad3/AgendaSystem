@@ -8,7 +8,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Timer;
 
 
 @Entity
@@ -25,8 +28,9 @@ public class Service {
     private Employee employee;
     @ManyToOne
     private Client client;
-    private LocalDateTime start;
-    private LocalDateTime ending;
+    private LocalDate date;
+    private LocalTime start;
+    private LocalTime ending;
 
     public Service(ServiceDTO dto){
         this.employee =  new Employee(dto.employee());

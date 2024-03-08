@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
@@ -34,6 +36,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
                 s.ending < :ending          
             )
             """)
-    boolean findAgendaMarked(LocalDateTime start, LocalDateTime ending, Long id);
+    boolean findAgendaMarked(LocalDate date, LocalTime start, LocalTime ending, Long id);
 
 }

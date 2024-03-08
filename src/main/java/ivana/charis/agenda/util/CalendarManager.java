@@ -13,13 +13,12 @@ public class CalendarManager {
 
     public List<LocalDateTime> generetedTimes(Integer day){
 
-        var datOfMonth = LocalDateTime.now().getDayOfMonth();
+        var datOfMonth = LocalDateTime.now().withDayOfMonth(day);
 
-        if(day > datOfMonth)
-            createAgenda(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")).withDayOfMonth(day).withHour(9).withMinute(0));
+        if(datOfMonth.isAfter(LocalDateTime.now()))
+            createAgenda(datOfMonth.atZone(ZoneId.of("America/Sao_Paulo")).toLocalDateTime());
         else
-            createAgenda(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")).withDayOfMonth(day));
-
+            createAgenda(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
         return times;
     }
 
