@@ -20,20 +20,22 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
             join e.services s
             where s.employee.id = :id
             and
-            s.start in( 
+            s.date = :date
+            and
+            s.start in(
                 select start from Service s
                 where
                 s.start > :start
                 and
                 s.start < :ending
             )
-            or 
-            s.ending in(            
+            or
+            s.ending in(
                 select ending from Service s
                 where
                 s.ending > :start
                 and
-                s.ending < :ending          
+                s.ending < :ending
             )
             """)
     boolean findAgendaMarked(LocalDate date, LocalTime start, LocalTime ending, Long id);

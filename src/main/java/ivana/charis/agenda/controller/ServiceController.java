@@ -32,7 +32,7 @@ public class ServiceController {
     }
 
     @PostMapping("/date")
-    public ResponseEntity<List<LocalDateTime>> findServicesDate(@RequestPart Integer day, Long idEmployee){
+    public ResponseEntity findServicesDate(@RequestPart Integer day, Long idEmployee){
         return ResponseEntity.ok().body(serviceS.findAgenda(day, idEmployee));
     }
 

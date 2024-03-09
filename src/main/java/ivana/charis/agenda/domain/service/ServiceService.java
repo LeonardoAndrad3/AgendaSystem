@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -28,21 +29,16 @@ public class ServiceService {
 
     private LocalDateTime dateNow = LocalDateTime.now(ZoneId.of("America/Sao_Paulo"));
 
-    public List<LocalDateTime> findAgenda(Integer day, Long idEmployee){
+    public List<LocalTime> findAgenda(Integer day, Long idEmployee){
 
         verifyDate(day);
 
         CalendarManager c = new CalendarManager();
 
-        var times = c.generetedTimes(day);
-
         var date = dateNow.withDayOfMonth(day).format(DateTimeFormatter.ISO_LOCAL_DATE);
         var services = rep.findByDayAndEmployee(LocalDate.parse(date), idEmployee);
 
-
-        for(ivana.charis.agenda.domain.service.Service service : services){
-           times.removeIf(d -> service.getStart().isBefore(d.toLocalTime()) && service.getEnding().isAfter(d));
-        }
+        var times = c.generetedTimes(services);
 
         return times;
     }
