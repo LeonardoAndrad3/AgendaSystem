@@ -65,7 +65,15 @@ public class ServiceService {
             var client = cRep.getReferenceById(data.idClient());
             var employee = eRep.getReferenceById(data.idEmployee());
 
+
+
+
+
             var service = rep.save(new Service(null, employee, client, data.date(), data.start(), data.end()));
+
+
+
+
 
             return new ServiceNewServiceDTO(service);
         }
