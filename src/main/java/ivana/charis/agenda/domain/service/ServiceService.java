@@ -3,6 +3,9 @@ package ivana.charis.agenda.domain.service;
 
 import ivana.charis.agenda.domain.client.ClientRepository;
 import ivana.charis.agenda.domain.employee.EmployeeRepository;
+import ivana.charis.agenda.domain.service.validations.ValidationDayOfWeek;
+import ivana.charis.agenda.domain.service.validations.ValidationService;
+import ivana.charis.agenda.domain.service.validations.ValidationsFindAgenda;
 import ivana.charis.agenda.util.CalendarManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,56 +32,37 @@ public class ServiceService {
 
     private LocalDateTime dateNow = LocalDateTime.now(ZoneId.of("America/Sao_Paulo"));
 
-    public List<LocalTime> findAgenda(Integer day, Long idEmployee){
+    @Autowired
+    private List<ValidationService> validations;
 
-        verifyDate(day);
+    @Autowired
+    private List<ValidationsFindAgenda> validationsFindAgenda;
 
-        CalendarManager c = new CalendarManager();
+    public List<LocalTime> findAgenda(Integer day, Integer month, Long idEmployee){
 
-        var date = dateNow.withDayOfMonth(day).format(DateTimeFormatter.ISO_LOCAL_DATE);
-        var services = rep.findByDayAndEmployee(LocalDate.parse(date), idEmployee);
+        if(eRep.existsById(idEmployee)) {
 
-        var times = c.generetedTimes(services);
+            var date = LocalDate.parse(dateNow.withMonth(month).withDayOfMonth(day).format(DateTimeFormatter.ISO_LOCAL_DATE));
+            validationsFindAgenda.forEach(v -> v.valid(date));
 
-        return times;
+            CalendarManager c = new CalendarManager();
+
+            var services = rep.findByDayAndEmployee(date, idEmployee);
+
+            return c.generetedTimes(services, day, month);
+        }
+
+        throw new RuntimeException("Id not exist");
     }
 
     public ServiceNewServiceDTO addNewService(ServiceAddDTO data){
+        validations.forEach(v -> v.valid(data));
 
-//        var date = dateNow.withDayOfMonth(day).format(DateTimeFormatter.ISO_LOCAL_DATE);
-//        var services = rep.findAllByDay(LocalDate.parse(date));
-//        List<LocalDateTime> times = findAgenda(day).stream().filter( d -> d.isAfter(data.start())&&  d.isBefore(data.end())).toList();
+        var client = cRep.getReferenceById(data.idClient());
+        var employee = eRep.getReferenceById(data.idEmployee());
+        var service = rep.save(new Service(null, employee, client, data.date(), data.start(), data.end()));
 
-        //This algorithm usage for search service marked in us system
-        //PLEASE THIS CODE IS DANGED WITH BIG DATA
-//        for(Service service : services){
-//            if(
-//                    (data.start().isBefore(service.getStart()) && service.getStart().isBefore(data.end()))
-//                    ||
-//                    (data.start().isBefore(service.getEnding()) && service.getEnding().isBefore(data.end()))
-//            )
-//                throw new RuntimeException("Sorry, the time marked is exist in us system");
-//        }
-
-
-        if(verifyDate(data.date().getDayOfMonth()) && eRep.findAgendaMarked(data.date(), data.start(), data.end(), data.idEmployee())){
-            var client = cRep.getReferenceById(data.idClient());
-            var employee = eRep.getReferenceById(data.idEmployee());
-
-
-
-
-
-            var service = rep.save(new Service(null, employee, client, data.date(), data.start(), data.end()));
-
-
-
-
-
-            return new ServiceNewServiceDTO(service);
-        }
-
-        throw new RuntimeException("Sorry, the time you want marked is exist in us system");
+        return new ServiceNewServiceDTO(service);
     }
 
     public Page<ServiceListDTO> findAll(Pageable pg) {
@@ -90,13 +74,5 @@ public class ServiceService {
         var service = rep.findById(id).orElseThrow(() -> new RuntimeException("Id Not found"));
 
         return new ServiceDTO(service);
-    }
-
-    public boolean verifyDate(int day){
-
-        if(day < LocalDateTime.now().getDayOfMonth())
-            throw new RuntimeException("Day is after in today date");
-
-        return day >= LocalDateTime.now().getDayOfMonth();
     }
 }

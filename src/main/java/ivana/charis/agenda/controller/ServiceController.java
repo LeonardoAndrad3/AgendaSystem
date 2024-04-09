@@ -31,9 +31,9 @@ public class ServiceController {
         return ResponseEntity.ok(service);
     }
 
-    @PostMapping("/date")
-    public ResponseEntity findServicesDate(@RequestPart Integer day, Long idEmployee){
-        return ResponseEntity.ok().body(serviceS.findAgenda(day, idEmployee));
+    @PostMapping("/timesToDate")
+    public ResponseEntity findServicesDate(@RequestPart Integer day, @RequestPart Integer month,@RequestPart Long id){
+        return ResponseEntity.ok().body(serviceS.findAgenda(day, month, id));
     }
 
     @PostMapping("/add")

@@ -35,6 +35,7 @@ public class Service {
     public Service(ServiceDTO dto){
         this.employee =  new Employee(dto.employee());
         this.client = new Client(dto.client());
+        this.date = dto.date();
         this.start = dto.start();
         this.ending = dto.end();
     }
@@ -42,6 +43,7 @@ public class Service {
     public Service(ServiceNewServiceDTO dto, Client client, Employee employee) {
         this.employee =  employee;
         this.client = client;
+        this.date = dto.date();
         this.start = dto.start();
         this.ending = dto.end();
     }
@@ -52,7 +54,8 @@ public class Service {
                 "id=" + id +
                 ", employee=" + employee.getId() +
                 ", client=" + client.getId() +
-                ", date=" + start +
+                ", date=" + date +
+                ", start=" + start +
                 ", end=" + ending +
                 '}';
     }

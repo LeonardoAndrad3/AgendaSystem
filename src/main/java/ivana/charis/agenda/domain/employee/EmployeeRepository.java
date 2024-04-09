@@ -17,25 +17,25 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     @Query("""
             select case when count(e) = 0 then true else false end from Employee e
-            join e.services s
-            where s.employee.id = :id
-            and
-            s.date = :date
-            and
-            s.start in(
-                select start from Service s
-                where
-                s.start > :start
-                and
-                s.start < :ending
-            )
-            or
-            s.ending in(
-                select ending from Service s
-                where
-                s.ending > :start
-                and
-                s.ending < :ending
+                        join e.services s
+                        where e.id = :id
+                        and
+                        s.date = :date
+                        and
+                        s.start in(
+                            select start from Service s
+                            where
+                            s.start >= :start
+                            and
+                            s.start <= :ending
+                        )
+                        or
+                        s.ending in(
+                            select ending from Service s
+                            where
+                            s.ending >= :start
+                            and
+                            s.ending <= :ending
             )
             """)
     boolean findAgendaMarked(LocalDate date, LocalTime start, LocalTime ending, Long id);

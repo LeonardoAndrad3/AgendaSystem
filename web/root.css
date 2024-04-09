@@ -53,11 +53,20 @@ a{
 }
 
 .input__primary{
+    transition: all .5s;
     border: none;
     border-bottom: 2.5px solid black;
     border-radius: 3px;
     padding: 2em 1em 1em 1em;
     font-size: 16px;
+}
+
+.input__primary:focus{
+    transition: all .5s;
+    border-bottom: 2.5px solid rgb(179, 179, 179);
+    padding: 2em 1em 1em 1.5em;
+    
+    outline: 0;
 }
 
 .title-primary{

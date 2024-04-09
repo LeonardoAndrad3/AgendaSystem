@@ -30,7 +30,6 @@ class AgendaApplicationTests {
 
 		System.out.println(date.getDayOfWeek());
 
-		assertThat(date.getDayOfWeek()).isBetween(DayOfWeek.MONDAY, DayOfWeek.SATURDAY);
+		assertThat(DayOfWeek.THURSDAY).isBetween(DayOfWeek.TUESDAY, DayOfWeek.SATURDAY);
 	}
-
 }

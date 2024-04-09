@@ -1,13 +1,15 @@
 package ivana.charis.agenda.domain.service.validations;
 
-import ivana.charis.agenda.domain.service.ServiceNewServiceDTO;
+import ivana.charis.agenda.domain.service.ServiceAddDTO;
 import ivana.charis.agenda.util.InfoSalon;
+import org.springframework.stereotype.Component;
 
-import java.time.DayOfWeek;
+import java.time.LocalDate;
 
-public class ValidationDayOfWeek implements Validation{
+@Component
+public class ValidationDayOfWeek implements ValidationService, ValidationsFindAgenda {
 
-    public void valid(ServiceNewServiceDTO data){
+    public void valid(ServiceAddDTO data){
 
         var date = data.date().getDayOfWeek();
 
@@ -19,4 +21,11 @@ public class ValidationDayOfWeek implements Validation{
 
     }
 
+    @Override
+    public void valid(LocalDate date){
+        InfoSalon.DayWeekClose.forEach(d -> {
+            if(date.getDayOfWeek().compareTo(d) == 0)
+                throw new RuntimeException("This day week not valid");
+        });
+    }
 }
