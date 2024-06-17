@@ -1,14 +1,17 @@
 const swiper = new Swiper('.swiper',{
 
-    slidesPerView:1,
-    spaceBetween: 1,
+    slidesPerView: 1,
+    spaceBetween: 10,
 
     pagination: {
         el: '.swiper-pagination',
         type: 'bullets',
       },
 
-      hiden:true,
+      grid:{
+        rows:3
+      },
+
       a11y: {
         prevSlideMessage: 'Previous slide',
         nextSlideMessage: 'Next slide',
