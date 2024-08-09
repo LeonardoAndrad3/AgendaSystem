@@ -10,9 +10,7 @@ import java.time.LocalTime;
 public record ServiceListDTO(
         Long id,
         EmployeeListDTO Employee,
-
         ClientListDTO Client,
-
         LocalDate date,
         LocalTime start,
         LocalTime end

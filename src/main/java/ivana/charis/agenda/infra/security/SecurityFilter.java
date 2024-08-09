@@ -48,6 +48,8 @@ public class SecurityFilter extends OncePerRequestFilter {
 
             UserDetails user;
 
+            System.out.println(data);
+
             if(data.get("rule").asString().equalsIgnoreCase("role_employee"))
                 user = employeeRepository.findByEmail(data.get("sub").asString());
             else

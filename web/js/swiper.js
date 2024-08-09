@@ -9,7 +9,7 @@ const swiper = new Swiper('.swiper',{
       },
 
       grid:{
-        rows:3
+        rows:4
       },
 
       a11y: {

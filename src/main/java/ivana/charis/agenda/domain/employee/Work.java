@@ -16,5 +16,4 @@ public enum Work {
         this.work = work;
     }
 
-
 }

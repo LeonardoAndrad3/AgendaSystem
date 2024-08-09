@@ -46,71 +46,83 @@
                 </ul>
             </section>
 
-            <section class="services__marked">
+            <div class="services__marked"> 
                 <div class="swiper">
-                    <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <div class="services-item ">
-                                    <span class="item__service tag-mariana"></span>
-                                    <p class="item__service-client">Fátima Nunes</p>
-                                    <p class="item__service-date">25/02
-                                        <span class="date-hours">09:20-10:30</span>
-                                    </p>
-                                </div>
+                    <div class="swiper-wrapper" id="services">
+
+                        <div class="swiper-slide">
+                            <div class="services-item ">
+                                <span class="item__service tag-${data.Employee.name.toLowerCase()}"></span>
+                                <p class="item__service-client">${data.Client.name}</p>
+                                <p class="item__service-date">${data.date}
+                                    <span class="date-hours">${data.start}-${data.end}</span>
+                                </p>
                             </div>
-                            <div class="swiper-slide">
-                                <div class="services-item ">
-                                    <span class="item__service tag-ivana"></span>
-                                    <p class="item__service-client">Fátima Nunes</p>
-                                    <p class="item__service-date">25/02
-                                        <span class="date-hours">09:20-10:30</span>
-                                    </p>
-                                </div>
+                        </div><div class="swiper-slide">
+                            <div class="services-item ">
+                                <span class="item__service tag-${data.Employee.name.toLowerCase()}"></span>
+                                <p class="item__service-client">${data.Client.name}</p>
+                                <p class="item__service-date">${data.date}
+                                    <span class="date-hours">${data.start}-${data.end}</span>
+                                </p>
                             </div>
-                            <div class="swiper-slide">
-                                <div class="services-item ">
-                                    <span class="item__service tag-mariana"></span>
-                                    <p class="item__service-client">Fátima Nunes</p>
-                                    <p class="item__service-date">25/02
-                                        <span class="date-hours">09:20-10:30</span>
-                                    </p>
-                                </div>
+                        </div><div class="swiper-slide">
+                            <div class="services-item ">
+                                <span class="item__service tag-${data.Employee.name.toLowerCase()}"></span>
+                                <p class="item__service-client">${data.Client.name}</p>
+                                <p class="item__service-date">${data.date}
+                                    <span class="date-hours">${data.start}-${data.end}</span>
+                                </p>
                             </div>
-                            <div class="swiper-slide">
-                                <div class="services-item ">
-                                    <span class="item__service tag-mariana"></span>
-                                    <p class="item__service-client">Fátima Nunes</p>
-                                    <p class="item__service-date">25/02
-                                        <span class="date-hours">09:20-10:30</span>
-                                    </p>
-                                </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="services-item ">
+                                <span class="item__service tag-${data.Employee.name.toLowerCase()}"></span>
+                                <p class="item__service-client">${data.Client.name}</p>
+                                <p class="item__service-date">${data.date}
+                                    <span class="date-hours">${data.start}-${data.end}</span>
+                                </p>
                             </div>
-                            <div class="swiper-slide">
-                                <div class="services-item ">
-                                    <span class="item__service tag-ivana"></span>
-                                    <p class="item__service-client">Fátima Nunes</p>
-                                    <p class="item__service-date">25/02
-                                        <span class="date-hours">09:20-10:30</span>
-                                    </p>
-                                </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="services-item ">
+                                <span class="item__service tag-${data.Employee.name.toLowerCase()}"></span>
+                                <p class="item__service-client">${data.Client.name}</p>
+                                <p class="item__service-date">${data.date}
+                                    <span class="date-hours">${data.start}-${data.end}</span>
+                                </p>
                             </div>
-                            <div class="swiper-slide">
-                                <div class="services-item ">
-                                    <span class="item__service tag-mariana"></span>
-                                    <p class="item__service-client">Fátima Nunes</p>
-                                    <p class="item__service-date">25/02
-                                        <span class="date-hours">09:20-10:30</span>
-                                    </p>
-                                </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="services-item ">
+                                <span class="item__service tag-${data.Employee.name.toLowerCase()}"></span>
+                                <p class="item__service-client">${data.Client.name}</p>
+                                <p class="item__service-date">${data.date}
+                                    <span class="date-hours">${data.start}-${data.end}</span>
+                                </p>
                             </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="services-item ">
+                                <span class="item__service tag-${data.Employee.name.toLowerCase()}"></span>
+                                <p class="item__service-client">${data.Client.name}</p>
+                                <p class="item__service-date">${data.date}
+                                    <span class="date-hours">${data.start}-${data.end}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                  
+                    <div class="swiper-button-prev buttons__nav"></div>
+                    <div class="swiper-button-next buttons__nav"></div>
+            
                     <div class="swiper-pagination"></div>
-                </div>
-            </section>
+            </div>
     </main> 
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="../../services/api.js"></script>
-<script src="../../services/getEmployees.js"></script>
+<script src="../../services/serviceTimes.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="../../js/swiper.js"></script>
 

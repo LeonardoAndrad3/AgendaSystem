@@ -1,4 +1,3 @@
-
 const form = document.getElementById("form__login");
 const body = document.getElementById("body");
 const agenda = document.getElementById("agenda");
