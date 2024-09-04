@@ -14,6 +14,8 @@ public class ValidationServiceAlreadyMarked implements ValidationService {
     @Override
     public void valid(ServiceAddDTO data) {
 
+        System.out.println(eRep.findAgendaMarked(data.date(), data.start(), data.end(), data.idEmployee()));
+
         if(!eRep.findAgendaMarked(data.date(), data.start(), data.end(), data.idEmployee()))
             throw new RuntimeException("This date to already marked in us system");
     }

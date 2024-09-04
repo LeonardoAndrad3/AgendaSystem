@@ -11,6 +11,4 @@ public record ServiceAddDTO(
         LocalTime start,
         LocalTime end
 ) {
-
-
 }

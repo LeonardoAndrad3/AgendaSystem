@@ -10,10 +10,8 @@ public class ValidationsDayBefore implements ValidationService, ValidationsFindA
 
     @Override
     public void valid(ServiceAddDTO data) {
-
         if(data.date().isBefore(LocalDate.now()))
             throw new RuntimeException("we not marked day is before today");
-
     }
 
     @Override

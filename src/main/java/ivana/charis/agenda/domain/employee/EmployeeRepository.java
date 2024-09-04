@@ -16,7 +16,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     UserDetails findByEmail (String email);
 
     @Query("""
-            select case when count(e) = 0 then true else false end from Employee e
+            select case when count(e) = 0 then true else false end
+            from Employee e
                         join e.services s
                         where e.id = :id
                         and
@@ -25,6 +26,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
                         s.start in(
                             select start from Service s
                             where
+                            s.date = :date
+                            and
                             s.start >= :start
                             and
                             s.start <= :ending
@@ -33,6 +36,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
                         s.ending in(
                             select ending from Service s
                             where
+                            s.date = :date
+                            and
                             s.ending >= :start
                             and
                             s.ending <= :ending
