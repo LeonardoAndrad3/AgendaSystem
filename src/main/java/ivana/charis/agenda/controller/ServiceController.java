@@ -40,6 +40,7 @@ public class ServiceController {
     public ResponseEntity addNewService(@RequestBody ServiceAddDTO data, UriComponentsBuilder builder){
 
         var newService = serviceS.addNewService(data);
+        System.out.println(newService);
         var uri = builder.path("/services/{id}").buildAndExpand(newService.id()).toUri();
 
         return ResponseEntity.created(uri).body(newService);

@@ -1,12 +1,11 @@
 package ivana.charis.agenda.domain.service.validations;
 
 import ivana.charis.agenda.domain.service.ServiceAddDTO;
-import ivana.charis.agenda.domain.service.ServiceNewServiceDTO;
 import jakarta.validation.ValidationException;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ValidationHours implements ValidationService{
+public class ValidationHours implements ValidationService {
     @Override
     public void valid(ServiceAddDTO data){
         var start = data.start().getHour();

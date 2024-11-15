@@ -3,6 +3,7 @@ package ivana.charis.agenda.domain.service;
 
 import ivana.charis.agenda.domain.client.ClientRepository;
 import ivana.charis.agenda.domain.employee.EmployeeRepository;
+import ivana.charis.agenda.domain.employee.Work;
 import ivana.charis.agenda.domain.service.validations.ValidationDayOfWeek;
 import ivana.charis.agenda.domain.service.validations.ValidationService;
 import ivana.charis.agenda.domain.service.validations.ValidationsFindAgenda;
@@ -56,11 +57,20 @@ public class ServiceService {
     }
 
     public ServiceNewServiceDTO addNewService(ServiceAddDTO data){
-        validations.forEach(v -> v.valid(data));
 
-        var client = cRep.getReferenceById(data.idClient());
-        var employee = eRep.getReferenceById(data.idEmployee());
-        var service = rep.save(new Service(null, employee, client, data.date(), data.start(), data.end()));
+        ServiceAddDTO newS = new ServiceAddDTO(data.idEmployee(),data.idClient(),data.work(),data.date(),data.start(),data.start().plusMinutes(45));
+
+        System.out.println(newS);
+        validations.forEach(v -> v.valid(newS));
+
+//        if(data.work().name().equalsIgnoreCase(Work.MANICURE.name())){
+//            System.out.printf("sim");
+//            end = data.start().plusHours(1);
+//        }
+
+        var client = cRep.getReferenceById(newS.idClient());
+        var employee = eRep.getReferenceById(newS.idEmployee());
+        var service = rep.save(new Service(null, employee, client, newS.date(), newS.start(), newS.end()));
 
         return new ServiceNewServiceDTO(service);
     }

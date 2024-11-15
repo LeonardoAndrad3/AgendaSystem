@@ -18,8 +18,4 @@ public class HandlerException extends ResponseEntityExceptionHandler {
     protected ResponseEntity notFound(Exception ex, WebRequest request){
         return new ResponseEntity("Entity not found", new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
-
-
-
-
 }
