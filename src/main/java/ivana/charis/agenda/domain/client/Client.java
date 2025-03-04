@@ -6,6 +6,8 @@ import ivana.charis.agenda.auth.User;
 import ivana.charis.agenda.domain.endereco.Endereco;
 import ivana.charis.agenda.domain.service.Service;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -28,8 +30,14 @@ public class Client implements UserDetails, GeneratedUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    @Column(unique = true)
+    private Long CPF;
+
     private String name;
 
+    @NotBlank
+    @Column(unique = true)
     private String email;
 
     @Column(unique = true)
@@ -47,10 +55,12 @@ public class Client implements UserDetails, GeneratedUser {
     private String password;
 
     public Client(ClientDTO data){
+        this.CPF = data.CPF();
         this.name = data.name();
         this.email = data.email();
         this.phone = data.phone();
         this.photo = data.photo();
+        this.password = data.password();
         this.endereco = new Endereco(data.endereco());
     }
 
@@ -87,6 +97,6 @@ public class Client implements UserDetails, GeneratedUser {
     @Override
     public User generatedUser() {
         var authority = this.getAuthorities().stream().findFirst().map(GrantedAuthority::getAuthority).orElse("null");
-        return new User(this.id, this.name, this.email, authority);
+        return new User(this.id, this.name, this.email, null, authority);
     }
 }

@@ -20,7 +20,7 @@ public class ServiceController {
     private ServiceService serviceS;
 
     @GetMapping
-    public ResponseEntity findAll(@PageableDefault(size = 4, sort = {"start"}, direction = Sort.Direction.ASC) Pageable pg){
+    public ResponseEntity findAll(@PageableDefault(sort = {"start"}, direction = Sort.Direction.ASC) Pageable pg){
         var services = serviceS.findAll(pg);
         return ResponseEntity.ok(services);
     }
@@ -39,6 +39,7 @@ public class ServiceController {
     @PostMapping("/add")
     public ResponseEntity addNewService(@RequestBody ServiceAddDTO data, UriComponentsBuilder builder){
 
+        System.out.println(data);
         var newService = serviceS.addNewService(data);
         System.out.println(newService);
         var uri = builder.path("/services/{id}").buildAndExpand(newService.id()).toUri();

@@ -70,7 +70,7 @@ public class ServiceService {
 
         var client = cRep.getReferenceById(newS.idClient());
         var employee = eRep.getReferenceById(newS.idEmployee());
-        var service = rep.save(new Service(null, employee, client, newS.date(), newS.start(), newS.end()));
+        var service = rep.save(new Service(null, employee, client, newS.date(), newS.start(), newS.end(), Status.ENVIADO));
 
         return new ServiceNewServiceDTO(service);
     }
@@ -78,6 +78,11 @@ public class ServiceService {
     public Page<ServiceListDTO> findAll(Pageable pg) {
         return rep.findAll(pg).map(ServiceListDTO::new);
     }
+
+//    public Page<ServiceListDTO> findAll() {
+//        return rep.findAll().stream().map();
+//    }
+
 
     public ServiceDTO findById(Long id) {
 

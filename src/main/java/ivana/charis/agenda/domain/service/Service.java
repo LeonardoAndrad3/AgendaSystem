@@ -3,6 +3,7 @@ package ivana.charis.agenda.domain.service;
 import ivana.charis.agenda.domain.client.Client;
 import ivana.charis.agenda.domain.employee.Employee;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,8 @@ public class Service {
     private LocalDate date;
     private LocalTime start;
     private LocalTime ending;
+    @Column(nullable = false, columnDefinition = "int DEFAULT 0")
+    private Status status;
 
     public Service(ServiceDTO dto){
         this.employee =  new Employee(dto.employee());
@@ -38,6 +41,7 @@ public class Service {
         this.date = dto.date();
         this.start = dto.start();
         this.ending = dto.end();
+        this.status = Status.ENVIADO;
     }
 
     public Service(ServiceNewServiceDTO dto, Client client, Employee employee) {
@@ -46,6 +50,7 @@ public class Service {
         this.date = dto.date();
         this.start = dto.start();
         this.ending = dto.end();
+        this.status = Status.ENVIADO;
     }
 
     @Override
@@ -57,6 +62,7 @@ public class Service {
                 ", date=" + date +
                 ", start=" + start +
                 ", end=" + ending +
+                ", status="+ status +
                 '}';
     }
 }

@@ -12,14 +12,16 @@ public record EnderecoDTO(
         @Pattern(regexp = "\\d{8}")
         String cep,
         @NotBlank
-        String cidade,
+        String localidade,
         @NotBlank
         String uf,
         String complemento,
+
+        String estado,
         Short numero
 ) {
 
         public EnderecoDTO(Endereco data) {
-                this(data.getLogradouro(), data.getBairro(), data.getCep(), data.getUf(), data.getCidade(), data.getComplemento(), data.getNumero());
+                this(data.getLogradouro(), data.getBairro(), data.getCep(), data.getLocalidade(), data.getUf(), data.getComplemento(), data.getEstado(), data.getNumero());
         }
 }

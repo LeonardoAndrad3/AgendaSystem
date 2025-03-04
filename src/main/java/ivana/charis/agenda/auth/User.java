@@ -1,4 +1,6 @@
 package ivana.charis.agenda.auth;
 
-public record User(Long id, String name, String email, String rule) {
+import ivana.charis.agenda.domain.employee.Work;
+
+public record User(Long id, String name, String email, Work work, String rule) {
 }

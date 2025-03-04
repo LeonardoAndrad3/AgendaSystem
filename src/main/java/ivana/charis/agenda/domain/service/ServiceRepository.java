@@ -12,4 +12,7 @@ public interface ServiceRepository extends JpaRepository<Service, Long> {
 
     @Query("SELECT new ivana.charis.agenda.domain.service.ServiceTimeToWork(s.start,s.ending) FROM Service s where s.date = :day and s.employee.id = :id")
     List<ServiceTimeToWork> findByDayAndEmployee(LocalDate day, long id);
+
+//    @Query("SELECT s from Service s where s.status")
+//    List<Service> findByServicesFinishState();
 }

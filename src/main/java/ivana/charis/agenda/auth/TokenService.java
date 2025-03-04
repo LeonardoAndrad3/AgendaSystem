@@ -27,7 +27,9 @@ public class TokenService{
             return JWT.create()
                     .withIssuer("API agenda.charis")
                     .withSubject(finalUser.email())
+                    .withClaim("name", finalUser.name())
                     .withClaim("rule", finalUser.rule())
+                    .withClaim("work", finalUser.work().toString())
                     .withClaim("id", finalUser.id())
                     .withExpiresAt(dataExpires())
                     .sign(algorithm);

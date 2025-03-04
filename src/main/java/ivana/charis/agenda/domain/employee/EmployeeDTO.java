@@ -13,7 +13,6 @@ public record EmployeeDTO(
 
         @NotBlank
         String name,
-
         @NotBlank
         @Email
         String email,
@@ -28,10 +27,11 @@ public record EmployeeDTO(
         Work work,
 
         @Valid
-        EnderecoDTO endereco
+        EnderecoDTO endereco,
+        String password
 ) {
 
         public EmployeeDTO(Employee data){
-                this(data.getName(), data.getEmail(), data.getPhone(),data.getPhoto() ,data.getDescription(), data.getWork(), new EnderecoDTO(data.getEndereco()));
+                this(data.getName(), data.getEmail(), data.getPhone(),data.getPhoto() ,data.getDescription(), data.getWork(), new EnderecoDTO(data.getEndereco()), data.getPassword());
         }
 }

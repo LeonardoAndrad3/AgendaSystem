@@ -13,7 +13,8 @@ public record ServiceNewServiceDTO(
         ClientDTO idClient,
         LocalDate date,
         LocalTime start,
-        LocalTime end
+        LocalTime end,
+        Status status
 ) {
     public ServiceNewServiceDTO(Service data) {
         this(
@@ -22,7 +23,8 @@ public record ServiceNewServiceDTO(
                 new ClientDTO(data.getClient()),
                 data.getDate(),
                 data.getStart(),
-                data.getEnding()
+                data.getEnding(),
+                data.getStatus()
         );
     }
 }

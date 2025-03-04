@@ -5,13 +5,14 @@ import ivana.charis.agenda.auth.User;
 import ivana.charis.agenda.domain.endereco.Endereco;
 import ivana.charis.agenda.domain.service.Service;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+import org.mindrot.jbcrypt.BCrypt;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -28,8 +29,11 @@ public class Employee implements UserDetails, GeneratedUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String name;
 
+    @Column(unique = true)
+    @NotBlank
     private String email;
 
     @Column(unique = true)
@@ -52,10 +56,14 @@ public class Employee implements UserDetails, GeneratedUser {
     private String password;
 
     public Employee(EmployeeDTO data) {
+        this.name = data.name();
+        this.email = data.email();
+        this.phone = data.phone();
         this.photo = data.photo();
         this.description = data.description();
         this.work = data.work();
         this.endereco = new Endereco(data.endereco());
+        this.password =  BCrypt.hashpw(data.password(), BCrypt.gensalt());
     }
 
     @Override
@@ -91,6 +99,6 @@ public class Employee implements UserDetails, GeneratedUser {
     @Override
     public User generatedUser() {
         var authority = this.getAuthorities().stream().findFirst().map(GrantedAuthority::getAuthority).orElse("null");
-        return new User(this.id, this.name, this.email, authority);
+        return new User(this.id, this.name, this.email, this.getWork(), authority);
     }
 }

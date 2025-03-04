@@ -23,12 +23,10 @@ public class AuthenticationController {
 
         @PostMapping
         public ResponseEntity login(@RequestBody @Valid DataAuthentication data){
-
             var authenticationToken = new UsernamePasswordAuthenticationToken(data.email(), data.password());
-            System.out.println(authenticationToken);
+            System.out.println("auth:" +authenticationToken);
             var authentication = manager.authenticate(authenticationToken);
-            System.out.println(authentication);
-
+            System.out.println("test:" + authentication);
             var token = tokenService.generatedToken((GeneratedUser) authentication.getPrincipal());
             System.out.println(token);
 
