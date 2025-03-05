@@ -21,7 +21,7 @@ public class TokenService{
     public <T extends GeneratedUser> String generatedToken(T user){
 
         var finalUser = user.generatedUser();
-
+        System.out.println("chegamos aqui");
         try{
             var algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
@@ -29,7 +29,7 @@ public class TokenService{
                     .withSubject(finalUser.email())
                     .withClaim("name", finalUser.name())
                     .withClaim("rule", finalUser.rule())
-                    .withClaim("work", finalUser.work().toString())
+                    .withClaim("work", finalUser.work() != null ? finalUser.work().toString() : null)
                     .withClaim("id", finalUser.id())
                     .withExpiresAt(dataExpires())
                     .sign(algorithm);

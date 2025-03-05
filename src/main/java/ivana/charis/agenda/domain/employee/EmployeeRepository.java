@@ -1,5 +1,6 @@
 package ivana.charis.agenda.domain.employee;
 
+import ivana.charis.agenda.domain.user.UserLogin;
 import jdk.jfr.BooleanFlag;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,7 +14,7 @@ import java.time.LocalTime;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-    UserDetails findByEmail (String email);
+    Employee findByEmail (String email);
 
     @Query("""
             select case when count(e) = 0 then true else false end

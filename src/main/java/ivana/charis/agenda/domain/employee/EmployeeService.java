@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class EmployeeService implements UserDetailsService {
+public class EmployeeService{
 
     @Autowired
     private EmployeeRepository rep;
@@ -25,10 +25,5 @@ public class EmployeeService implements UserDetailsService {
     public Employee save(EmployeeDTO dto){
         Employee employee = new Employee(dto);
         return rep.save(employee);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return rep.findByEmail(username);
     }
 }

@@ -14,7 +14,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+import org.mindrot.jbcrypt.BCrypt;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,7 +24,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Client implements UserDetails, GeneratedUser {
+public class Client{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,43 +60,8 @@ public class Client implements UserDetails, GeneratedUser {
         this.email = data.email();
         this.phone = data.phone();
         this.photo = data.photo();
-        this.password = data.password();
+        this.password = BCrypt.hashpw(data.password(), BCrypt.gensalt());
         this.endereco = new Endereco(data.endereco());
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_CLIENT"));
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-    @Override
-    public User generatedUser() {
-        var authority = this.getAuthorities().stream().findFirst().map(GrantedAuthority::getAuthority).orElse("null");
-        return new User(this.id, this.name, this.email, null, authority);
-    }
 }

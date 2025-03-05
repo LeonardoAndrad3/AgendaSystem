@@ -7,6 +7,7 @@ import ivana.charis.agenda.domain.client.Client;
 import ivana.charis.agenda.domain.client.ClientRepository;
 import ivana.charis.agenda.domain.employee.Employee;
 import ivana.charis.agenda.domain.employee.EmployeeRepository;
+import ivana.charis.agenda.domain.user.UserLogin;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -48,12 +49,10 @@ public class SecurityFilter extends OncePerRequestFilter {
 
             UserDetails user;
 
-            System.out.println(data);
-
             if(data.get("rule").asString().equalsIgnoreCase("role_employee"))
-                user = employeeRepository.findByEmail(data.get("sub").asString());
+                user = (UserDetails) employeeRepository.findByEmail(data.get("sub").asString());
             else
-                user = clientRepository.findByEmail(data.get("sub").asString());
+                user = (UserDetails) clientRepository.findByEmail(data.get("sub").asString());
 
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
