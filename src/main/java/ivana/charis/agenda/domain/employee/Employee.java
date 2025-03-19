@@ -65,5 +65,4 @@ public class Employee{
         this.endereco = new Endereco(data.endereco());
         this.password =  BCrypt.hashpw(data.password(), BCrypt.gensalt());
     }
-
 }

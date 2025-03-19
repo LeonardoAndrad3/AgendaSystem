@@ -30,13 +30,10 @@ public class UserLoginService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("opa");
         if(username.contains("charis.emp")) {
-            System.out.println("employee");
             var employee = employeeRepository.findByEmail(username);
-            return new UserLogin(employee.getId(),employee.getName(),employee.getEmail(),employee.getPassword(),null,"CLIENT");
+            return new UserLogin(employee.getId(),employee.getName(),employee.getEmail(),employee.getPassword(),null,"EMPLOYEE");
         } else {
-            System.out.println("client");
             var client = clientRepository.findByEmail(username);
             return new UserLogin(client.getId(),client.getName(),client.getEmail(),client.getPassword(),null,"CLIENT");
         }

@@ -28,7 +28,7 @@ public class TokenService{
                     .withIssuer("API agenda.charis")
                     .withSubject(finalUser.email())
                     .withClaim("name", finalUser.name())
-                    .withClaim("rule", finalUser.rule())
+                    .withClaim("role", finalUser.role())
                     .withClaim("work", finalUser.work() != null ? finalUser.work().toString() : null)
                     .withClaim("id", finalUser.id())
                     .withExpiresAt(dataExpires())
