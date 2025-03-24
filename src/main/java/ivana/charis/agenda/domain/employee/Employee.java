@@ -4,6 +4,7 @@ import ivana.charis.agenda.auth.GeneratedUser;
 import ivana.charis.agenda.auth.User;
 import ivana.charis.agenda.domain.endereco.Endereco;
 import ivana.charis.agenda.domain.service.Service;
+import ivana.charis.agenda.domain.user.UserLogin;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -23,7 +24,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Employee{
+public class Employee implements GeneratedUser{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,5 +65,15 @@ public class Employee{
         this.work = data.work();
         this.endereco = new Endereco(data.endereco());
         this.password =  BCrypt.hashpw(data.password(), BCrypt.gensalt());
+    }
+
+    @Override
+    public User generatedUser() {
+        return new User(this.getId(),this.getName(),this.getEmail(),this.getWork(),"EMPLOYEE");
+    }
+
+    @Override
+    public UserLogin generatedUserLogin() {
+        return new UserLogin(this.getId(),this.getName(),this.getEmail(), this.getPassword(), this.getWork(), "CLIENT");
     }
 }

@@ -1,21 +1,17 @@
 package ivana.charis.agenda.domain.client;
 
-
 import ivana.charis.agenda.auth.GeneratedUser;
 import ivana.charis.agenda.auth.User;
 import ivana.charis.agenda.domain.endereco.Endereco;
 import ivana.charis.agenda.domain.service.Service;
+import ivana.charis.agenda.domain.user.UserLogin;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.mindrot.jbcrypt.BCrypt;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -24,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Client{
+public class Client implements GeneratedUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,6 +51,7 @@ public class Client{
     private String password;
 
     public Client(ClientDTO data){
+        super();
         this.CPF = data.CPF();
         this.name = data.name();
         this.email = data.email();
@@ -64,4 +61,13 @@ public class Client{
         this.endereco = new Endereco(data.endereco());
     }
 
+    @Override
+    public User generatedUser() {
+        return new User(this.getId(),this.getName(),this.getEmail(), null, "CLIENT");
+    }
+
+    @Override
+    public UserLogin generatedUserLogin() {
+        return new UserLogin(this.getId(),this.getName(),this.getEmail(), this.getPassword(), null, "CLIENT");
+    }
 }

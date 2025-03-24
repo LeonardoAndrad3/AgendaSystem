@@ -3,6 +3,7 @@ package ivana.charis.agenda.domain.user;
 import ivana.charis.agenda.auth.GeneratedUser;
 import ivana.charis.agenda.auth.User;
 import ivana.charis.agenda.domain.client.Client;
+import ivana.charis.agenda.domain.employee.Employee;
 import ivana.charis.agenda.domain.employee.Work;
 import jakarta.persistence.Entity;
 import lombok.*;
@@ -22,8 +23,8 @@ import java.util.Collections;
 public class UserLogin implements UserDetails, GeneratedUser{
 
     private Long id;
-    private String email;
     private String name;
+    private String email;
     private String password;
     private Work work;
     private String role;
@@ -32,7 +33,6 @@ public class UserLogin implements UserDetails, GeneratedUser{
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority("ROLE_"+role));
     }
-
     @Override
     public String getPassword() {
         return password;
@@ -67,5 +67,9 @@ public class UserLogin implements UserDetails, GeneratedUser{
     public User generatedUser() {
         var authorities = getAuthorities().stream().findFirst().map(GrantedAuthority::getAuthority).orElse(null);
         return new User(id, name, email, work, authorities);
+    }
+    @Override
+    public UserLogin generatedUserLogin() {
+        return null;
     }
 }

@@ -21,9 +21,9 @@ public class TokenService{
     public <T extends GeneratedUser> String generatedToken(T user){
 
         var finalUser = user.generatedUser();
-        System.out.println("chegamos aqui");
         try{
             var algorithm = Algorithm.HMAC256(secret);
+
             return JWT.create()
                     .withIssuer("API agenda.charis")
                     .withSubject(finalUser.email())

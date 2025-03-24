@@ -31,7 +31,6 @@ public class EmployeeController {
 
     @GetMapping("/byEmail")
     public ResponseEntity findByEmail(@RequestParam String email){
-        System.out.println(email);
         return ResponseEntity.ok(service.findByEmail(email));
     }
 

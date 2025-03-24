@@ -24,4 +24,8 @@ public class ClientService {
         return rep.save(new Client(client));
     }
 
+    public ClientProfileDTO findByEmail(String email) {
+        final Client client = rep.findByEmail(email);
+        return new ClientProfileDTO(client);
+    }
 }
