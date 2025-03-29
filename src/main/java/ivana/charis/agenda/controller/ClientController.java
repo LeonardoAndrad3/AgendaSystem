@@ -31,7 +31,6 @@ public class ClientController {
         System.out.println("oi"+email);
         return ResponseEntity.ok().body(service.findByEmail(email));
     }
-
     @PostMapping
     public ResponseEntity save(@RequestBody ClientDTO client, UriComponentsBuilder currentURI){
         var save = service.save(client);

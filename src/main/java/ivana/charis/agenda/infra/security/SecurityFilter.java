@@ -2,28 +2,20 @@ package ivana.charis.agenda.infra.security;
 
 
 import ivana.charis.agenda.auth.TokenService;
-import ivana.charis.agenda.auth.User;
-import ivana.charis.agenda.domain.client.Client;
 import ivana.charis.agenda.domain.client.ClientRepository;
-import ivana.charis.agenda.domain.employee.Employee;
 import ivana.charis.agenda.domain.employee.EmployeeRepository;
-import ivana.charis.agenda.domain.user.UserLogin;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.servlet.NoHandlerFoundException;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @Component
@@ -42,31 +34,33 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        var token = getToken(request);
+        HttpSession session = request.getSession(false);
+        Authentication auth = null;
 
-        if(token != null) {
-            var data = tokenService.getClaims(token);
-
-            UserLogin user;
-
-            if(data.get("role").asString().equalsIgnoreCase("role_employee")) {
-                user = employeeRepository.findByEmail(data.get("sub").asString()).generatedUserLogin();
-            } else {
-                user = clientRepository.findByEmail(data.get("sub").asString()).generatedUserLogin();
+        if (session != null){
+            auth = (Authentication) session.getAttribute("user");
+            getToken(session);
+        if (auth != null) {
+//                var role = auth.getAuthorities().stream().findFirst().orElse(null);
+//    //            var data = tokenService.getClaims(token);
+//    //            if(role.getAuthority().contains("EMPLOYEE")) {
+//    //                user = employeeRepository.findByEmail(data.get("sub").asString()).generatedUserLogin();
+//    //            } else {
+//    //                user = clientRepository.findByEmail(data.get("sub").asString()).generatedUserLogin();
+//    //            }
+                var authentication = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), auth.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-
-            var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
         filterChain.doFilter(request,response);
     }
 
-    private String getToken(HttpServletRequest request) {
-        var auth = request.getHeader("Authorization");
+    private String getToken(HttpSession session) {
+        var token = session.getAttribute("token");
 
-        if(auth != null)
-            return auth.replace("Bearer ", "");
+        if(token != null)
+            return token.toString();
 
         return null;
     }
