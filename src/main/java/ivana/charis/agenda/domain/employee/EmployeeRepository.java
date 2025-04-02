@@ -1,7 +1,9 @@
 package ivana.charis.agenda.domain.employee;
 
+import ivana.charis.agenda.domain.service.ServiceListDTO;
 import ivana.charis.agenda.domain.user.UserLogin;
 import jdk.jfr.BooleanFlag;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +18,9 @@ import java.util.Optional;
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     Employee findByEmail (String email);
+
+
+
 
     @Query("""
             select case when count(e) = 0 then true else false end

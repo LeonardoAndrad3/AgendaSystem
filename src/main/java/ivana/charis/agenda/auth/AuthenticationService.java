@@ -1,5 +1,6 @@
 package ivana.charis.agenda.auth;
 
+import ivana.charis.agenda.domain.user.UserLogin;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
@@ -24,18 +25,28 @@ public class AuthenticationService {
     @Autowired
     private TokenService tokenService;
 
+
     public String startSession(HttpServletRequest request, DataAuthentication data){
         var authenticationToken = new UsernamePasswordAuthenticationToken(data.email(), data.password());
         var authentication = manager.authenticate(authenticationToken);
         var token = tokenService.generatedToken((GeneratedUser) authentication.getPrincipal());
+        var user = (GeneratedUser) authentication.getPrincipal();
 
         HttpSession session = request.getSession(true);
         String randomId = UUID.randomUUID().toString();
-        session.setMaxInactiveInterval(2*60*60);
+        session.setMaxInactiveInterval(60*60);
         session.setAttribute("token", token);
-        session.setAttribute("userId", randomId);
-        session.setAttribute("user", authentication);
+        session.setAttribute("userId", authentication);
+        session.setAttribute("userAuth", authentication);
+        session.setAttribute("user", user);
+
+        System.out.println("toma"+session.getAttribute("user"));
 
         return token;
+    }
+
+    public boolean validSession(HttpServletRequest request){
+        System.out.println(request.getSession(false).getCreationTime());
+        return true;
     }
 }

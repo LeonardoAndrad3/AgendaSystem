@@ -32,7 +32,7 @@ public class UserLoginService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if(username.contains("charis.emp")) {
             var employee = employeeRepository.findByEmail(username);
-            return new UserLogin(employee.getId(),employee.getName(),employee.getEmail(),employee.getPassword(),null,"EMPLOYEE");
+            return new UserLogin(employee.getId(),employee.getName(),employee.getEmail(),employee.getPassword(),employee.getWork(),"EMPLOYEE");
         } else {
             var client = clientRepository.findByEmail(username);
             return new UserLogin(client.getId(),client.getName(),client.getEmail(),client.getPassword(),null,"CLIENT");

@@ -38,7 +38,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         Authentication auth = null;
 
         if (session != null){
-            auth = (Authentication) session.getAttribute("user");
+            auth = (Authentication) session.getAttribute("userAuth");
             getToken(session);
         if (auth != null) {
 //                var role = auth.getAuthorities().stream().findFirst().orElse(null);
