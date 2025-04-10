@@ -40,6 +40,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         if (session != null){
             auth = (Authentication) session.getAttribute("userAuth");
             getToken(session);
+
         if (auth != null) {
 //                var role = auth.getAuthorities().stream().findFirst().orElse(null);
 //    //            var data = tokenService.getClaims(token);
@@ -48,6 +49,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 //    //            } else {
 //    //                user = clientRepository.findByEmail(data.get("sub").asString()).generatedUserLogin();
 //    //            }
+
                 var authentication = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), auth.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }

@@ -34,13 +34,11 @@ public class AuthenticationService {
 
         HttpSession session = request.getSession(true);
         String randomId = UUID.randomUUID().toString();
-        session.setMaxInactiveInterval(60*60);
+        session.setMaxInactiveInterval(2*60*60);
         session.setAttribute("token", token);
         session.setAttribute("userId", authentication);
         session.setAttribute("userAuth", authentication);
         session.setAttribute("user", user);
-
-        System.out.println("toma"+session.getAttribute("user"));
 
         return token;
     }
